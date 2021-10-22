@@ -40,6 +40,9 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
         }
         Bukkit.getPluginManager().registerEvents(new BotEvent(), this);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AsyncCheckBind(this), 0L, 60L);
+        if (GEN_bStats) {
+            new Metrics(this, 13112);
+        }
     }
 
     @Override
