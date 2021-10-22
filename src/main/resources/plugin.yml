@@ -19,7 +19,6 @@ permissions:
   whitelist4qq.command.whitelist4qq:
     description: Allow use /whitelist4qq
     default: true
-    children:
-      whitelist4qq.command.whitelist4qq.reload:
-        default: op
-        description: Allow use /whitelist4qq reload
+whitelist4qq.command.whitelist4qq.reload:
+    default: op
+    escription: Allow use /whitelist4qq reload
