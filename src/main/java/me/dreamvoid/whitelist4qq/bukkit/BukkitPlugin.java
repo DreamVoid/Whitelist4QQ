@@ -51,39 +51,39 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(args.length>0 && args[0].equalsIgnoreCase("reload") && sender.hasPermission("whitelist4qq.command.whitelist4qq.reload")){
             config.loadConfig();
-            sender.sendMessage("&aÅäÖÃÎÄ¼şÒÑ¾­ÖØĞÂ¼ÓÔØ£¡");
+            sender.sendMessage("&aé…ç½®æ–‡ä»¶å·²ç»é‡æ–°åŠ è½½ï¼");
         } else sender.sendMessage("This server is running "+getDescription().getName()+" version "+getDescription().getVersion()+" by "+ getDescription().getAuthors().toString().replace("[","").replace("]","")+" (MiraiMC version "+Bukkit.getPluginManager().getPlugin("MiraiMC").getDescription().getVersion()+")");
         return true;
     }
 
     /**
-     * Íæ¼Ò¼´½«¼ÓÈë·şÎñÆ÷ÊÂ¼ş
+     * ç©å®¶å³å°†åŠ å…¥æœåŠ¡å™¨äº‹ä»¶
      */
     public class PlayerLogin implements Listener {
         @EventHandler
         public void onPlayerJoin(AsyncPlayerPreLoginEvent e) {
             boolean allow = false;
 
-            if(GEN_CheckRange_JOIN) { // ¼ÓÈë·şÎñÆ÷µÄÊ±ºò¼ì²â
+            if(GEN_CheckRange_JOIN) { // åŠ å…¥æœåŠ¡å™¨çš„æ—¶å€™æ£€æµ‹
                 long binder = MiraiMC.getBinding(e.getUniqueId().toString());
                 if(binder != 0) {
-                    // ÊÇ·ñĞèÒª½øÒ»²½¼ì²âÊÇ·ñÔÚÈºÄÚ
+                    // æ˜¯å¦éœ€è¦è¿›ä¸€æ­¥æ£€æµ‹æ˜¯å¦åœ¨ç¾¤å†…
                     if(BOT_CheckQQInGroup) {
                         for(long group : BOT_UsedGroupAccounts) {
-                            if(allow) break; // Èç¹ûÏÂÃæµÄ´úÂëÒÑ¾­¼ì²âµ½ÔÚÈºÀïÁË£¬¾Í²»¼ÌĞø¼ì²â
+                            if(allow) break; // å¦‚æœä¸‹é¢çš„ä»£ç å·²ç»æ£€æµ‹åˆ°åœ¨ç¾¤é‡Œäº†ï¼Œå°±ä¸ç»§ç»­æ£€æµ‹
 
                             for(long bot : BOT_UsedBotAccounts) {
-                                try { // ¼Ó¸ötry·ÀÖ¹·şÖ÷Íü¼ÇµÇÂ¼»úÆ÷ÈËÈ»ºó³¢ÊÔ»ñÈ¡µÄÊ±ºò±¨´íµÄÎÊÌâ
+                                try { // åŠ ä¸ªtryé˜²æ­¢æœä¸»å¿˜è®°ç™»å½•æœºå™¨äººç„¶åå°è¯•è·å–çš„æ—¶å€™æŠ¥é”™çš„é—®é¢˜
                                     if(MiraiBot.getBot(bot).getGroup(group).contains(binder)) {
                                         allow = true;
                                         break;
                                     }
-                                } catch (NoSuchElementException ignored) { } // ²»ĞèÒª´¦Àí±¨´í£¬Ö±½Óignored
+                                } catch (NoSuchElementException ignored) { } // ä¸éœ€è¦å¤„ç†æŠ¥é”™ï¼Œç›´æ¥ignored
                             }
                         }
-                    } else allow = true; // ²»ĞèÒªÔòÖ±½Ótrue
+                    } else allow = true; // ä¸éœ€è¦åˆ™ç›´æ¥true
                 }
-            } else allow = true; // Èç¹û²»ÔÚ¼ÓÈë·şÎñÆ÷µÄÊ±ºò¼ì²â£¬Ö±½Ó·ÅĞĞ
+            } else allow = true; // å¦‚æœä¸åœ¨åŠ å…¥æœåŠ¡å™¨çš„æ—¶å€™æ£€æµ‹ï¼Œç›´æ¥æ”¾è¡Œ
 
             if(allow){
                 e.allow();
@@ -97,7 +97,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
     }
 
     /**
-     * Íæ¼Ò¼ÓÈë·şÎñÆ÷ÊÂ¼ş
+     * ç©å®¶åŠ å…¥æœåŠ¡å™¨äº‹ä»¶
      */
     public class PlayerJoin implements Listener {
         @EventHandler
@@ -112,7 +112,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
     }
 
     /**
-     * Íæ¼Ò¶¯×÷ÊÂ¼ş
+     * ç©å®¶åŠ¨ä½œäº‹ä»¶
      */
     public class PlayerActions implements Listener {
         @EventHandler
@@ -171,17 +171,17 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
     }
 
     /**
-     * »úÆ÷ÈËÊÂ¼ş
+     * æœºå™¨äººäº‹ä»¶
      */
     public class BotEvent implements Listener {
         @EventHandler
         public void onGroupMessage(MiraiGroupMessageEvent e) {
             if (BOT_UsedBotAccounts.contains(e.getBotID()) && BOT_UsedGroupAccounts.contains(e.getGroupID()) && BOT_UseGroupMessageCommand && e.getMessageContent().startsWith(BOT_BindCommandPrefix)) {
                 if ((GEN_PreventIDRebind && MiraiMC.getBinding(Bukkit.getOfflinePlayer(e.getMessageContent().replace(BOT_BindCommandPrefix, "")).getUniqueId().toString()) != 0) || (GEN_PreventQQRebind && !MiraiMC.getBinding(e.getSenderID()).equals(""))) {
-                    // ×èÖ¹°ó¶¨
+                    // é˜»æ­¢ç»‘å®š
                     MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(BOT_Messages_BindFailed.replace("%id%", MiraiMC.getBinding(e.getSenderID())));
                 } else {
-                    // ÔÊĞí°ó¶¨
+                    // å…è®¸ç»‘å®š
                     MiraiMC.addBinding(Bukkit.getOfflinePlayer(e.getMessageContent().replace(BOT_BindCommandPrefix, "")).getUniqueId().toString(), e.getSenderID());
                     MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(BOT_Messages_BindSuccess);
                 }
