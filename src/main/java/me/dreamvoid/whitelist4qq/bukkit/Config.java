@@ -7,6 +7,7 @@ import java.util.List;
 public class Config {
     private final BukkitPlugin plugin;
 
+    public static boolean GEN_bStats;
     public static boolean GEN_CheckRange_JOIN;
     public static boolean GEN_CheckRange_ACTION;
     public static boolean GEN_CheckRange_SPEC;
@@ -33,6 +34,7 @@ public class Config {
         plugin.saveDefaultConfig();
         FileConfiguration config = plugin.getConfig();
 
+        GEN_bStats = config.getBoolean("general.bStats", true);
         GEN_CheckRange_JOIN = config.getBoolean("general.check-range.join", true);
         GEN_CheckRange_ACTION = config.getBoolean("general.check-range.action", false);
         GEN_CheckRange_SPEC = config.getBoolean("general.check-range.spec", false);
