@@ -1,0 +1,25 @@
+name: Whitelist4QQ
+main: me.dreamvoid.whitelist4qq.bukkit.BukkitPlugin
+authors:
+  - xingxing520
+  - DreamVoid
+version: ${project.version}
+description: Whitelist for QQ with MiraiMC.
+api-version: 1.13
+depend:
+  - MiraiMC
+commands:
+   whitelist4qq:
+     description: Whitelist4QQ main command.
+     permission: whitelist4qq.command.whitelist4qq
+     aliases:
+       - qwhitelist
+       - qwl
+permissions:
+  whitelist4qq.command.whitelist4qq:
+    description: Allow use /whitelist4qq
+    default: true
+    children:
+      whitelist4qq.command.whitelist4qq.reload:
+        default: op
+        description: Allow use /whitelist4qq reload
