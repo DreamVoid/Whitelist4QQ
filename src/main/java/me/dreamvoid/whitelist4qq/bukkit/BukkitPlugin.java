@@ -18,12 +18,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;
+import java.util.logging.Logger;
 
 import static me.dreamvoid.whitelist4qq.bukkit.Config.*;
 
 public class BukkitPlugin extends JavaPlugin implements Listener {
     private Config config;
     private final HashMap<Player, Boolean> cache = new HashMap<>();
+
+    Logger log = Logger.getLogger("测试");
 
     @Override
     public void onLoad() {
@@ -69,15 +72,21 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
 
             if(GEN_CheckRange_JOIN) { // 加入服务器的时候检测
                 long binder = MiraiMC.getBinding(e.getUniqueId().toString());
-                if(binder != 0) {
+                long checkByName = MiraiMC.getBinding(e.getName());
+                //log.info("加入者QQ：" + binder);
+                //log.info("加入者UUID：" + e.getUniqueId().toString());
+                if(binder != 0 || checkByName != 0) {
                     // 是否需要进一步检测是否在群内
                     if(BOT_CheckQQInGroup) {
+                        //log.info("1步退出");
                         for(long group : BOT_UsedGroupAccounts) {
                             if(allow) break; // 如果下面的代码已经检测到在群里了，就不继续检测
 
+                            //log.info("2步退出");
                             for(long bot : BOT_UsedBotAccounts) {
                                 try { // 加个try防止服主忘记登录机器人然后尝试获取的时候报错的问题
                                     if(MiraiBot.getBot(bot).getGroup(group).contains(binder)) {
+                                        //log.info("3步退出");
                                         allow = true;
                                         break;
                                     }
@@ -105,7 +114,9 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
     public class PlayerJoin implements Listener {
         @EventHandler
         public void onPlayerJoined(PlayerJoinEvent e) {
-            if (MiraiMC.getBinding(e.getPlayer().getUniqueId().toString()) == 0) {
+
+            if (MiraiMC.getBinding(e.getPlayer().getUniqueId().toString()) == 0
+            && MiraiMC.getBinding(e.getPlayer().getName()) == 0) {
                 cache.put(e.getPlayer(), false);
             }
             if (GEN_CheckRange_SPEC) {
@@ -179,15 +190,24 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
     public class BotEvent implements Listener {
         @EventHandler
         public void onGroupMessage(MiraiGroupMessageEvent e) {
+            //log.info("测试收到");
             if (BOT_UsedBotAccounts.contains(e.getBotID()) && BOT_UsedGroupAccounts.contains(e.getGroupID()) && BOT_UseGroupMessageCommand && e.getMessageContent().startsWith(BOT_BindCommandPrefix)) {
-                if ((GEN_PreventIDRebind && MiraiMC.getBinding(Bukkit.getOfflinePlayer(e.getMessageContent().replace(BOT_BindCommandPrefix, "")).getUniqueId().toString()) != 0) || (GEN_PreventQQRebind && !MiraiMC.getBinding(e.getSenderID()).equals(""))) {
+                if ((GEN_PreventIDRebind && MiraiMC.getBinding(Bukkit.getOfflinePlayer(e.getMessageContent().replace(BOT_BindCommandPrefix, "")).getUniqueId().toString()) != 0)
+                        || (GEN_PreventQQRebind && !MiraiMC.getBinding(e.getSenderID()).equals(""))) {
                     // 阻止绑定
-                    MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(BOT_Messages_BindFailed.replace("%id%", MiraiMC.getBinding(e.getSenderID())));
+                    //MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(BOT_Messages_BindFailed.replace("%id%", MiraiMC.getBinding(e.getSenderID())));
+                    //log.info("测试不放行");
                 } else {
                     // 允许绑定
                     MiraiMC.addBinding(Bukkit.getOfflinePlayer(e.getMessageContent().replace(BOT_BindCommandPrefix, "")).getUniqueId().toString(), e.getSenderID());
-                    MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(BOT_Messages_BindSuccess);
+                    //log.info(MiraiMC.getBinding(Bukkit.getOfflinePlayer(e.getMessageContent().replace(BOT_BindCommandPrefix, "")).getUniqueId().toString()) + "");
+                    MiraiMC.addBinding(e.getMessageContent().replace(BOT_BindCommandPrefix, "").trim(), e.getSenderID());
+                    //log.info(MiraiMC.getBinding(e.getMessageContent().replace(BOT_BindCommandPrefix, "")) + "");
+                    //log.info("测试放行");
                 }
+            }
+            if(e.getMessageContent().contains("测试5566")){
+                MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessageMirai("测试收到了");
             }
         }
 

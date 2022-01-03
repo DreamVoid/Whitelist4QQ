@@ -41,17 +41,25 @@
     <dependencies>
         <!--This adds the Spigot API artifact to the build -->
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.12-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.github.dreamvoid/MiraiMC-Bukkit -->
         <dependency>
             <groupId>io.github.dreamvoid</groupId>
-            <artifactId>MiraiMC-Integration</artifactId>
-            <!--请确保版本为Github上的最新版本-->
-            <version>1.5</version>
-            <scope>provided</scope>
+            <artifactId>MiraiMC-Bukkit</artifactId>
+            <version>1.5-pre1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.github.dreamvoid/MiraiMC-Base -->
+        <dependency>
+            <groupId>io.github.dreamvoid</groupId>
+            <artifactId>MiraiMC-Base</artifactId>
+            <version>1.5-pre1</version>
+        </dependency>
+
+
+
     </dependencies>
 </project>
