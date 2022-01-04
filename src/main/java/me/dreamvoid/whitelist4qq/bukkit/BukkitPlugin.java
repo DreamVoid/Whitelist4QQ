@@ -267,15 +267,14 @@ public class BukkitPlugin extends JavaPlugin implements Listener , CommandExecut
                 if ((GEN_PreventIDRebind && MiraiMC.getBinding(Bukkit.getOfflinePlayer(e.getMessageContent().replace(BOT_BindCommandPrefix, "")).getUniqueId().toString()) != 0)
                         || (GEN_PreventQQRebind && !MiraiMC.getBinding(e.getSenderID()).equals(""))) {
                     // 阻止绑定
+                    //编译不通过，并且机器人经常被封，暂时关闭回复功能
                     //MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(BOT_Messages_BindFailed.replace("%id%", MiraiMC.getBinding(e.getSenderID())));
-                    //log.info("测试不放行");
                 } else {
                     // 允许绑定
                     MiraiMC.addBinding(Bukkit.getOfflinePlayer(e.getMessageContent().replace(BOT_BindCommandPrefix, "")).getUniqueId().toString(), e.getSenderID());
-                    //log.info(MiraiMC.getBinding(Bukkit.getOfflinePlayer(e.getMessageContent().replace(BOT_BindCommandPrefix, "")).getUniqueId().toString()) + "");
                     MiraiMC.addBinding(e.getMessageContent().replace(BOT_BindCommandPrefix, "").trim(), e.getSenderID());
-                    //log.info(MiraiMC.getBinding(e.getMessageContent().replace(BOT_BindCommandPrefix, "")) + "");
-                    //log.info("测试放行");
+                    //编译不通过，并且机器人经常被封，暂时关闭回复功能
+                    //MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(BOT_Messages_BindSuccess);
                 }
             }
             if (e.getMessageContent().contains("测试5566")) {
