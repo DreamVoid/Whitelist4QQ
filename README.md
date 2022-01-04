@@ -1,6 +1,9 @@
 # Whitelist4QQ
 
-原版用UUID作为查询依据，经常失效，自行添加了游戏名称也作为参考依据的功能
+添加了游戏名称也作为参考依据的功能，避免UUID查询的暂时失效
+
+新增部分查询指令，以帮助服主确认白名单是否成功添加等管理功能
+
 
 
 在QQ群内自助申请Minecraft白名单！
@@ -34,9 +37,14 @@ Whitelist4QQ 是一个基于 [MiraiMC](https://github.com/DreamVoid/MiraiMC) 的
 | ---------------------------- | ---------------------- | ---------- | ------- |
 | /whitelist4qq  | 插件主命令 | whitelist4qq.command.whitelist4qq | qwl, qwhitelist |
 | /whitelist4qq reload | 重新加载配置文件 | whitelist4qq.command.whitelist4qq.reload |
+| /whitelist4qq check [查询列] [查询值] | 以uuid/游戏名查询QQ或者以QQ查询uuid/游戏名，返回一个值。查询列可选qq,account,uuid,id,name | whitelist4qq.command.whitelist4qq.reload |
+| /whitelist4qq checkall [查询列] [查询值] | 以uuid/游戏名查询所有QQ或者以QQ查询所有uuid/游戏名，返回所有值。查询列可选qq,account,uuid,id,name | whitelist4qq.command.whitelist4qq.reload |
 
 ### 权限
 | 权限节点 | 描述 | 默认 |
 | ---------------------------- | ---------------------- | ---------- |
 | whitelist4qq.command.whitelist4qq | 允许使用 /whitelist4qq | YES |
 | whitelist4qq.command.whitelist4qq.reload | 允许使用 /whitelist4qq reload | OP |
+
+## 日后功能
+- 删除对应账户或者ID的指令
