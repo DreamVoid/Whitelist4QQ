@@ -2,8 +2,8 @@ package me.dreamvoid.whitelist4qq.bukkit;
 
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
-import me.dreamvoid.miraimc.bukkit.event.MiraiGroupMemberLeaveEvent;
-import me.dreamvoid.miraimc.bukkit.event.MiraiGroupMessageEvent;
+import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberLeaveEvent;
+import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -62,13 +62,13 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
     /**
      * 玩家即将加入服务器事件
      */
-    public class PlayerLogin implements Listener {
+    public static class PlayerLogin implements Listener {
         @EventHandler
         public void onPlayerJoin(AsyncPlayerPreLoginEvent e) {
             boolean allow = false;
 
             if(GEN_CheckRange_JOIN) { // 加入服务器的时候检测
-                long binder = MiraiMC.getBinding(e.getUniqueId().toString());
+                long binder = MiraiMC.getBind(e.getUniqueId());
                 if(binder != 0) {
                     // 是否需要进一步检测是否在群内
                     if(BOT_CheckQQInGroup) {
@@ -105,7 +105,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
     public class PlayerJoin implements Listener {
         @EventHandler
         public void onPlayerJoined(PlayerJoinEvent e) {
-            if (MiraiMC.getBinding(e.getPlayer().getUniqueId().toString()) == 0) {
+            if (MiraiMC.getBind(e.getPlayer().getUniqueId()) == 0) {
                 cache.put(e.getPlayer(), false);
             }
             if (GEN_CheckRange_SPEC) {
@@ -176,25 +176,25 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
     /**
      * 机器人事件
      */
-    public class BotEvent implements Listener {
+    public static class BotEvent implements Listener {
         @EventHandler
         public void onGroupMessage(MiraiGroupMessageEvent e) {
-            if (BOT_UsedBotAccounts.contains(e.getBotID()) && BOT_UsedGroupAccounts.contains(e.getGroupID()) && BOT_UseGroupMessageCommand && e.getMessageContent().startsWith(BOT_BindCommandPrefix)) {
-                if ((GEN_PreventIDRebind && MiraiMC.getBinding(Bukkit.getOfflinePlayer(e.getMessageContent().replace(BOT_BindCommandPrefix, "")).getUniqueId().toString()) != 0) || (GEN_PreventQQRebind && !MiraiMC.getBinding(e.getSenderID()).equals(""))) {
+            if (BOT_UsedBotAccounts.contains(e.getBotID()) && BOT_UsedGroupAccounts.contains(e.getGroupID()) && BOT_UseGroupMessageCommand && e.getMessage().startsWith(BOT_BindCommandPrefix)) {
+                if ((GEN_PreventIDRebind && MiraiMC.getBind(Bukkit.getOfflinePlayer(e.getMessage().replace(BOT_BindCommandPrefix, "")).getUniqueId()) != 0) || (GEN_PreventQQRebind && MiraiMC.getBind(e.getSenderID()) != null)) {
                     // 阻止绑定
-                    MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(BOT_Messages_BindFailed.replace("%id%", MiraiMC.getBinding(e.getSenderID())));
+                    MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(BOT_Messages_BindFailed.replace("%id%", MiraiMC.getBind(e.getSenderID()).toString()));
                 } else {
                     // 允许绑定
-                    MiraiMC.addBinding(Bukkit.getOfflinePlayer(e.getMessageContent().replace(BOT_BindCommandPrefix, "")).getUniqueId().toString(), e.getSenderID());
+                    MiraiMC.addBind(Bukkit.getOfflinePlayer(e.getMessage().replace(BOT_BindCommandPrefix, "")).getUniqueId(), e.getSenderID());
                     MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(BOT_Messages_BindSuccess);
                 }
             }
         }
 
         @EventHandler
-        public void onGroupQuit(MiraiGroupMemberLeaveEvent e) {
+        public void onGroupQuit(MiraiMemberLeaveEvent e) {
             if (BOT_UsedBotAccounts.contains(e.getBotID()) && BOT_UsedGroupAccounts.contains(e.getGroupID()) && BOT_RemoveBindWhenQQQuit) {
-                MiraiMC.removeBinding(e.getTargetID());
+                MiraiMC.removeBind(e.getTargetID());
             }
         }
     }
@@ -209,7 +209,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
         public void run() {
             if(cache.size() > 0) {
                 for(Player player : cache.keySet()){
-                    if(MiraiMC.getBinding(player.getUniqueId().toString()) != 0) {
+                    if(MiraiMC.getBind(player.getUniqueId()) != 0) {
                         cache.remove(player);
                         if(GEN_CheckRange_SPEC) {
                             new BukkitRunnable() {
