@@ -16,6 +16,8 @@ public class Config {
     public static String GEN_KickMessage;
     public static String GEN_NotifyMessage;
     public static String GEN_BindSuccessMessage;
+    public static boolean GEN_UseSelfData;
+    public static boolean GEN_UsePlayerName;
 
     public static List<Long> BOT_UsedBotAccounts;
     public static List<Long> BOT_UsedGroupAccounts;
@@ -25,6 +27,7 @@ public class Config {
     public static String BOT_BindCommandPrefix;
     public static String BOT_Messages_BindSuccess;
     public static String BOT_Messages_BindFailed;
+    public static String BOT_Messages_BindFailedSelfdata;
 
     Config(BukkitPlugin plugin) {
         this.plugin = plugin;
@@ -43,6 +46,8 @@ public class Config {
         GEN_KickMessage = config.getString("general.kick-message", "");
         GEN_NotifyMessage = config.getString("general.notify-message", "");
         GEN_BindSuccessMessage = config.getString("general.bind-success-message", "");
+        GEN_UseSelfData = config.getBoolean("general.use-self-data", false);
+        GEN_UsePlayerName = config.getBoolean("general.use-player-name", false);
 
         BOT_UsedBotAccounts = config.getLongList("bot.used-bot-accounts");
         BOT_UsedGroupAccounts = config.getLongList("bot.used-group-numbers");
@@ -52,5 +57,6 @@ public class Config {
         BOT_BindCommandPrefix = config.getString("bot.bind-command-prefix");
         BOT_Messages_BindSuccess = config.getString("bot.messages.bind-success");
         BOT_Messages_BindFailed = config.getString("bot.messages.bind-failed");
+        BOT_Messages_BindFailedSelfdata = config.getString("bot.messages.bind-failed-selfdata");
     }
 }
