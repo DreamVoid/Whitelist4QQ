@@ -48,6 +48,13 @@ general:
 
   # 验证成功提示
   bind-success-message: "&a你成功获取了白名单，现在可以正常游玩服务器了！"
+  
+  # 是否不使用MiraiMC的数据库而改为插件自存储
+  use-self-data: false
+  
+  # 是否使用玩家名存储数据而非UUID
+  # 由于MiraiMC特性，此项只会在use-self-data为true时生效
+  use-player-name: false
 
 # 机器人配置
 bot:
@@ -88,7 +95,13 @@ bot:
 
     # 绑定失败
     # 无论绑定失败的原因是什么，都只会发这一条
-    # 可用变量：%id% - QQ绑定的ID
+    # 可用变量：%id% - QQ绑定的ID（use-self-data为true时不可用）
     bind-failed: |-
       绑定失败，此ID可能已经绑定另一个QQ，或你的QQ已经绑定了一个ID，请联系管理员处理！
       此QQ绑定的ID：%id%
+    
+    # 由于数据库原因绑定失败
+    # 只会出现在use-self-data为true时
+    bind-failed-selfdata: |-
+      绑定失败，在保存白名单文件时出现异常！
+      请联系管理员查看控制台处理！

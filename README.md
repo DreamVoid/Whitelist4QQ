@@ -26,13 +26,15 @@ Whitelist4QQ 是一个基于 [MiraiMC](https://github.com/DreamVoid/MiraiMC) 的
 默认配置文件可以在这里找到：https://github.com/DreamVoid/Whitelist4QQ/blob/main/src/main/resources/config.yml
 ## 指令和权限
 ### 指令
-| 命令 | 描述 | 权限 | 别名 |
-| ---------------------------- | ---------------------- | ---------- | ------- |
-| /whitelist4qq  | 插件主命令 | whitelist4qq.command.whitelist4qq | qwl, qwhitelist |
-| /whitelist4qq reload | 重新加载配置文件 | whitelist4qq.command.whitelist4qq.reload |
+| 命令                         | 描述       | 权限                                       | 别名 |
+|----------------------------|----------|------------------------------------------| ------- |
+| /whitelist4qq              | 插件主命令    | whitelist4qq.command.whitelist4qq        | qwl, qwhitelist |
+| /whitelist4qq reload       | 重新加载配置文件 | whitelist4qq.command.whitelist4qq.reload |
+| /whitelist4qq remove <玩家名> | 移除玩家的绑定  | whitelist4qq.command.whitelist4qq.remove |
 
 ### 权限
-| 权限节点 | 描述 | 默认 |
-| ---------------------------- | ---------------------- | ---------- |
-| whitelist4qq.command.whitelist4qq | 允许使用 /whitelist4qq | YES |
+| 权限节点 | 描述                        | 默认 |
+| ---------------------------- |---------------------------| ---------- |
+| whitelist4qq.command.whitelist4qq | 允许使用 /whitelist4qq        | YES |
 | whitelist4qq.command.whitelist4qq.reload | 允许使用 /whitelist4qq reload | OP |
+| whitelist4qq.command.whitelist4qq.remove | 允许使用 /whitelist4qq remove | OP |
