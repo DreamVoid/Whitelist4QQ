@@ -21,7 +21,7 @@ permissions:
     children:
       whitelist4qq.command.*:
         default: op
-        children: 
+        children:
           whitelist4qq.command.whitelist4qq:
             description: Allow use /whitelist4qq
             default: true
